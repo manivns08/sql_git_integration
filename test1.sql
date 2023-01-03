@@ -22,7 +22,14 @@ emp_salary employee_test.salary%type;
 cursor getdetails is
 select empid,firstname,lastname,salary from employee_test;
 begin
-
+open getdetails;
+loop
+fetch getdetails into emp_id,emp_firstname,emp_lastname,emp_salary ;
+exit when getdetails%notfound;
+dbms_output.put_line(emp_id||' '||emp_firstname||' '||emp_lastname||' '||emp_salary);
+insert into employee_clone(empid,firstname,lastname,salary) values(emp_id,emp_firstname,emp_lastname,emp_salary); 
+end loop;
+end;
 
 
 
